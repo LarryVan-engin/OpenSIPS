@@ -1,0 +1,61 @@
+1. login in Root User
+#su -
+password:
+
+2. Update the System
+#apt-get update
+
+3. Install Dependencies
+apt-get install build-essential openssl bison flex
+
+4. Install More Dependencies
+apt-get install perl libdbi-perl libdbd-mysql-perl libdbd-pg-perl libfrontier-rpc-perl libterm-readline-gnu-perl libberkeleydb-perl ncurses-dev
+
+5. Installing MySQL Server
+apt-get install mysql-server libmysqlclient-dev
+
+Give the Passwords. Whereever it is required
+
+6. Download OpenSIPS Package
+#cd /usr/src
+#wget http://opensips.org/pub/opensips/late...
+#tar -zxvf opensips-2.1.2.tar.gz
+
+7. Compiling OpenSIPS Source
+#cd opensips-2.1.2/
+#make all
+#make install
+
+8. OpenSIPS Configuration
+#mkdir /var/run/opensips
+#cd packaging/debian/
+#cp opensips.default /etc/default/opensips
+#cp opensips.init /etc/init.d/opensips
+
+9. Run the following commands to start
+openSIPS scripts
+chmod +x /etc/init.d/opensips
+#useradd opensips
+#update-rc.d opensips defaults 99
+
+10. Open the default OpenSIPS using any of editor
+#gedit /etc/default/opensips
+Change the following
+'RUN_OpenSIPS=yes'
+USER=opensips
+group=opensips
+S_MEMORY=128
+save the file
+
+Edit the following file
+#gedit /etc/init.d/opensips
+DAEMON=/usr/local/sbin/opensips
+RUN_OPENSIPS=yes
+
+11. Starting OpenSIPS Service
+#/etc/init.d/opensips start
+#systemctl status opensips
+
+12. Check the Status of OpenSIPS Services
+ps -ef | grep opensips
+netstat -alnp | grep opensips
