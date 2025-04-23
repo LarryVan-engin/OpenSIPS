@@ -1,0 +1,60 @@
+commant using in debian linux
+su
+access root
+
+apt update
+apt install opensips
+
+apt install opensips
+apt install opensips-mysql-module
+apt install opensips-ratelimit-module
+
+clear
+
+update
+locate ratelimit
+apt install opensips-cli
+
+sau do past link opensips CLI
+
+opensips-cli
+database create
+mysql
+quit
+
+mysql
+show databases
+
+
+cd
+ls -la
+vi .opensips-cli.cfg
+
+opensips-cli
+mi
+mi ps
+
+//////
+#install mysql server ubuntu
+sudo apt install mysql-server
+sudo service mysql status
+
+sudo ss -tap | grep mysql
+
+sudo service mysql restart
+sudo journalctl -u mysql
+
+#configure mysql
+bind-address = 192.168.0.5
+sudo systemctl restart mysql.service
+
+#view mysql version
+mysql --version
+
+#manage mysql system
+sudo systemctl enable mysql //enable mysql automatically start
+
+sudo systemctl start mysql //start mysql database server
+
+sudo systemctl status mysql //view the mysql status
+
