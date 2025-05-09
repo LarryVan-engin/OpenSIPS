@@ -1,0 +1,161 @@
+BIAMP Certificate
+
+//SIP
+SIP overview
+session initiation protocol: establish a multimedia session between virtually any two parties. sessions could be between:
+voip endpoints. video conferencing. video streamin. video surveilance. instant messaging. 
+
+SIp terminology: high level SIP keywords use to indicate the current process of a cal setup sequence. useful for  troubleshooting inter-operability issues.
+
+register : request to become a part of session
+invite : establish session
+ack : confirm
+cancel : terminate a pending request
+bye : terminate a session 
+options : give many options without signal before
+
+//sip response codes
+provisional(1xx): request received and being processed
+success (2xx)
+redirection(3xx)
+client error (4xx)
+server error (5xx)
+global failure (6xx)
+
+recap
+call setup protocols: a language that voip devices use for communication. contains information about a device and what it supports. used to aid endpoints in establishin a presence on the voip network. used to negotiate specifics of a call before it is placed.
+
+using third party to translate
+
+//common call set up protocols
+SIP: most vendors now support either directly oor via translation
+H323: less common
+MGCP (media gateway less common): less common
+others
+
+//SIP resides within the application layer (OSI model)
+//layer1-layer4
+physical
+datalink
+network
+transport
+//layer5-layer7
+session
+peresentation
+application
+//layer5-7 are often describes as fuzzy because there is usually not much different between them
+
+
+voip endpoint registration:
+register to proxy server: proxy location, SIP username, digest username/password
+
+//SIP call setup
+
+//voip call on the network
+voice signal-local endpoint
+codec encoding
+rtp formating - real time protocols
+ip packetizing
+transmission over network
+IP stripping
+RTP formating verified then removed
+decoding codec
+voice signal- fare endpoint
+
+//voip codecs
+voice stream: coder/decoder
+software that converts an a signal into a digital stream for storage and transmission
+stream is defined by a format type
+conversion can be: ADC, DAC
+stream are broken into equal time segment
+
+//voip rtp
+real time protocol
+delivery service for codec streams
+used to : identified the format type of data transfered
+determine packet order of received information
+synchronize stream from different sources
+utilizes UDP as a transport protocol
+RTP packets are amending with IP information for network traversal
+
+
+IP--UDP--RTP--Voicestream
+//VOIP rtcp
+real time control protocol
+provides real time stream quality control monitoring
+time stampin and interval definitions
+rtp packet counts and sequence updates
+source identifiers
+
+//voip jitter buffering
+rtp packet are realeased at an even cadence
+network paths may cause packet delivery variance
+packets are buffered to provide even delivery
+RTCP can be used to adjust jitter buffer size based on current stream performance
+
+//Voip codecs
+ITU international telecommunication union
+G series: media, ...
+
+//codec properties
+audio banwidth:
+narrowband 8khz sample 200hz-3.4khz encoded voice bandwidth
+wideband 16khz sample 50hz-7khz encoded voice bandwidth
+
+network bandwidth : more/less efficient algorithms create different sized stream
+longer sample create less overhead (voice stream)
+concept of voice activity detection and discontinuous transmission
+
+
+latency
+codec delay
+algorithm delay: determine by more or less efficient algorithm in the codec
+PACKETization delay: sample time of the audio signal
+total call delay include network delay and playout delay
+more than 150ms call - haft duplex call
+
+ 
+wireshark trace
+2 ways to setup wireshark trace:
+mirror port or network tap
+mirror port is the most convenient way
+
+the fourthway is using old ethernet hub
+
+//troubleshooting voip systems
+step to an operational voip endpoint:
+- network validation
+- voip registration
+- making a call
+
+//network validation
+filter: 
+-icmp: to check ip address connected with ping, check IP address and time send signal
+-bootp: to check dhcp ip address, check VLAN ID
+-arp: address resolution protocol (request)
+-arp&&eth.addr=='time'
+
+//following voip registration 
+-sip: to check which is registered with SIP protocol
+
+//placing a voip phone call
+sdp: session description protocol
+-sip||rtp: RTP protocol
+
+//blank: svc-2 is successfully registered or tesira software is offline
+
+//network is down: physical network connection has not been sensed on svc-2 ethernet port. check cabling or switch power.
+
+//address conflict: svc-2 has detected an IP conflict. this mean there is likely another device on the network is using the same IP address that is assigned to the svc-2.
+
+//dhcp in progress: the svc-2 has been set to obtain an ip address automatically via dhcp, and is currently requesting an address from the dhcp server. it also likely not receiving a response from the dhcp server.
+
+//proxy not configure: valid IP address or hostname for the proxy server was not supplied in the voip line properties window of the voip control/status block. must disconnect from the active software session
+
+//SIP user not configured: a SIP user was not supplied in the VOIP line properties window of the voip control/status block. must disconnect from the active software session and add this parameter to the configuration.
+
+//auth user/password not configured: authorization username or password was not supplied in the voip line properties window of the voip control/status block, but the proxy server has requested them
+
+//registering: svc-2 is attempting to contact the proxy server. maybe that this request also not making it to the proxy. perhaps we are pointing to the wrong device. or maybe the registration attempt is being denied by the proxy.
+
+//authentication failed: svc-2 has attempted to register with the proxy server but received an error an error message in response to its registration attempt.
